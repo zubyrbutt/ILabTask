@@ -12,7 +12,7 @@ interface HeaderProps {
   onNotificationPress?: () => void;
 }
 
-const Header = ({onMenuPress, onNotificationPress}: HeaderProps) => {
+const HeaderVariation1 = ({onMenuPress, onNotificationPress}: HeaderProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftSection}>
@@ -40,4 +40,4 @@ const Header = ({onMenuPress, onNotificationPress}: HeaderProps) => {
   );
 };
 
-export default Header; 
+export default HeaderVariation1; 
