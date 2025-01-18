@@ -1,41 +1,71 @@
 import React from 'react';
 
-import { Image, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import {View, TouchableOpacity, Image} from 'react-native';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import theme from '../../theme';
 import Label from '../label';
-import { styles } from './styles';
+import theme from '../../theme';
+import {styles} from './styles';
 
-
-interface HeaderProps {
+interface HeaderVariation2Props {
+  name?: string;
+  role?: string;
   onMenuPress?: () => void;
   onNotificationPress?: () => void;
+  onMessagePress?: () => void;
+  onProfilePress?: () => void;
 }
 
-const HeaderVariation2 = ({onMenuPress, onNotificationPress}: HeaderProps) => {
+const HeaderVariation2 = ({
+  name = 'Olivia Smith',
+  role = 'Freelancer',
+  onMenuPress,
+  onNotificationPress,
+  onMessagePress,
+  onProfilePress,
+}: HeaderVariation2Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.leftSection}>
-        <TouchableOpacity onPress={onMenuPress} style={styles.iconButton}>
-          <Icon name="menu" size={24} color={theme.colors.gray[700]} />
+        <TouchableOpacity onPress={onMenuPress} style={styles.menuButton}>
+          <MaterialCommunityIcons name="menu" size={24} color={theme.colors.success[500]} />
         </TouchableOpacity>
-        <View style={styles.titleSection}>
-          <Label size="2xl" weight="semibold" color={theme.colors.gray[900]}>
-            Olivia Rhye
+        <View style={styles.userInfo}>
+          <Label size="2xl" weight="normal" color={theme.colors.gray[600]}>
+            {name}
           </Label>
-          <Label size="md" weight="normal" color={theme.colors.gray[500]}>
-            Freelancer
+          <Label size="lg" color={theme.colors.gray[400]}>
+            {role}
           </Label>
         </View>
       </View>
+
       <View style={styles.rightSection}>
-        <TouchableOpacity onPress={onNotificationPress} style={styles.iconButton}>
-          <Icon name="bell" size={24} color={theme.colors.gray[700]} />
+        <TouchableOpacity
+          onPress={onMessagePress}
+          style={styles.iconButton}>
+          <View style={styles.iconContainer}>
+            <MaterialCommunityIcons name="chat" size={23} color={theme.colors.success[700]} />
+            <View style={styles.badge} />
+          </View>
         </TouchableOpacity>
-        <View style={styles.avatar}>
-          <Image source={{uri: 'https://i.pravatar.cc/300'}} style={styles.avatarImage} />
-        </View>
+
+        <TouchableOpacity
+          onPress={onNotificationPress}
+          style={styles.iconButton}>
+          <View style={styles.iconContainer}>
+            <MaterialCommunityIcons name="bell" size={23} color={theme.colors.success[700]} />
+            <View style={styles.badge} />
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={onProfilePress}>
+          <Image
+            source={{uri: 'https://i.pravatar.cc/300'}}
+            style={styles.profileImage}
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );

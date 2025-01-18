@@ -6,8 +6,8 @@ import theme from "../../theme";
 export const styles = StyleSheet.create({
     container: {
       flexDirection: 'row',
-      alignItems: 'center',
       justifyContent: 'space-between',
+      alignItems: 'center',
       paddingHorizontal: theme.spacing.lg,
       paddingVertical: theme.spacing.lg,
       backgroundColor: theme.colors.white,
@@ -17,28 +17,40 @@ export const styles = StyleSheet.create({
     leftSection: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: theme.spacing.md,
+      gap: theme.spacing.lg,
     },
-    titleSection: {
-      gap: theme.spacing.xs,
-    },
-    iconButton: {
+    menuButton: {
       padding: theme.spacing.xs,
+    },
+    userInfo: {
+      gap: theme.spacing.xs,
     },
     rightSection: {
       flexDirection: 'row',
       alignItems: 'center',
-      gap: theme.spacing.md,
+      gap: theme.spacing.sm,
     },
-    avatar: {
-      width: theme.spacing['5xl'],
-      height: theme.spacing['5xl'],
-      borderRadius: 100,
+    iconButton: {
+      padding: theme.spacing.xs,
     },
-    avatarImage: {
-      width: '100%',
-      height: '100%',
-      borderRadius: 100,
+    iconContainer: {
+      position: 'relative',
+    },
+    badge: {
+      position: 'absolute',
+      top: -2,
+      right: -2,
+      width: 12,
+      height: 12,
+      borderRadius: 6,
+      backgroundColor: theme.colors.error[500],
+      borderWidth: 2,
+      borderColor: theme.colors.white,
+    },
+    profileImage: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
     },
   });
   
