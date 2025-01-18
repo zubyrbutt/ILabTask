@@ -1,14 +1,20 @@
 import React from 'react'
 
-import { StyleSheet, View } from 'react-native'
+import { ScrollView, StyleSheet, View } from 'react-native'
 
-import { expensesData, incomeData } from '../../data/charts';
+import { expensesData, incomeData, invoicesData, taxesData } from '../../data/charts';
+import BankAccountCard from '../../components/bank-account-card'
 import FinancialCard from '../../components/financial-card'
 import theme from '../../theme'
 
 const HomeScreen = () => {
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} >
+      <BankAccountCard
+        bankName="BBVA"
+        accountNumber="5678"
+        balance={40206.20}
+      />
       <FinancialCard
         title="Income"
         amount={1280}
@@ -25,15 +31,30 @@ const HomeScreen = () => {
         period="Last Qtr"
         color={theme.colors.error[500]}
       />
-
-    </View>
+      <FinancialCard
+        title="Taxes"
+        amount={1280}
+        percentage={15}
+        chartPoints={taxesData}
+        period="Last Qtr"
+        color={theme.colors.error[500]}
+      />
+      <FinancialCard
+        title="Invoices"
+        amount={1280}
+        percentage={15}
+        chartPoints={invoicesData}
+        period="Last Qtr"
+        color={theme.colors.success[500]}
+      />  
+    </ScrollView>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.gray[50],
+    backgroundColor: theme.colors.white,
   },
 })
 
