@@ -7,8 +7,11 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.white,
   },
   cardsContainer: {
+    paddingHorizontal: theme.spacing.md,
+  },
+  cardRow: {
     flexDirection: 'row',
-    padding: theme.spacing.md,
-    gap: theme.spacing.md,
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing.md,
   },
 }); 
