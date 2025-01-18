@@ -26,7 +26,8 @@ const chartData = [
 
 const HomeScreen = () => {
   const [activeTab, setActiveTab] = useState('income');
-  const [selectedPeriod, setSelectedPeriod] = useState('quarterly');
+  const [selectedPeriod1, setSelectedPeriod1] = useState('quarterly');
+  const [selectedPeriod2, setSelectedPeriod2] = useState('quarterly');
 
   return (
     <ScrollView style={styles.container}>
@@ -68,17 +69,19 @@ const HomeScreen = () => {
         color={theme.colors.success[500]}
       />  
      <FinancialTabs onTabChange={setActiveTab} />
-      <View style={styles.dropdownContainer}>
-        <Dropdown
-          options={periodOptions}
-          value={selectedPeriod}
-          onChange={setSelectedPeriod}
-        />
-        <Dropdown
-          options={periodOptions}
-          value={selectedPeriod}
-          onChange={setSelectedPeriod}
-        />
+      <View style={styles.dropdownWrapper}>
+        <View style={styles.dropdownContainer}>
+          <Dropdown
+            options={periodOptions}
+            value={selectedPeriod1}
+            onChange={setSelectedPeriod1}
+          />
+          <Dropdown
+            options={periodOptions}
+            value={selectedPeriod2}
+            onChange={setSelectedPeriod2}
+          />
+        </View>
       </View>
       
       <View style={styles.chartContainer}>
@@ -96,14 +99,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.white,
   },
+  dropdownWrapper: {
+    backgroundColor: theme.colors.white,
+    zIndex: 2,
+  },
   dropdownContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    // paddingHorizontal: theme.spacing.lg,
+    zIndex: 2,
   },
   chartContainer: {
     marginTop: theme.spacing.lg,
     paddingHorizontal: theme.spacing.md,
+    zIndex: 1,
   },
 });
 

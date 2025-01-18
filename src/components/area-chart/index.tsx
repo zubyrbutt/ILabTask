@@ -1,23 +1,22 @@
 import React from 'react';
 
-import {View, Dimensions} from 'react-native';
-import Svg, {
-  Path,
-  Line,
-  Text,
-  Defs,
-  LinearGradient,
-  Stop,
-  Rect,
-} from 'react-native-svg';
+import { Dimensions, View } from 'react-native';
 import Animated, {
-  useAnimatedProps,
-  withTiming,
-  useSharedValue,
-  withSequence,
-  withDelay,
-  Easing,
+    Easing,
+    useAnimatedProps,
+    useSharedValue,
+    withDelay,
+    withSequence,
+    withTiming,
 } from 'react-native-reanimated';
+import Svg, {
+    Defs,
+    Line,
+    LinearGradient,
+    Path,
+    Stop,
+    Text
+} from 'react-native-svg';
 
 const AnimatedPath = Animated.createAnimatedComponent(Path);
 
