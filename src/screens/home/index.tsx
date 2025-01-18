@@ -8,6 +8,7 @@ import FinancialTabs from '../../components/financial-tabs';
 import FinancialCard from '../../components/financial-card';
 import Dropdown from '../../components/dropdown';
 import theme from '../../theme';
+import AreaChart from '../../components/area-chart';
 
 const periodOptions = [
   {label: 'Quarterly', value: 'quarterly'},
@@ -15,6 +16,12 @@ const periodOptions = [
   {label: '2nd Quarter', value: 'q2'},
   {label: '3rd Quarter', value: 'q3'},
   {label: '4th Quarter', value: 'q4'},
+];
+
+const chartData = [
+  {date: 'Jan', value: 450, projectedValue: 380},
+  {date: 'Feb', value: 780, projectedValue: 500},
+  {date: 'Mar', value: 950, projectedValue: 720},
 ];
 
 const HomeScreen = () => {
@@ -27,12 +34,6 @@ const HomeScreen = () => {
         bankName="BBVA"
         accountNumber="5678"
         balance={40206.20}
-      />
-      <FinancialTabs onTabChange={setActiveTab} />
-      <Dropdown
-        options={periodOptions}
-        value={selectedPeriod}
-        onChange={setSelectedPeriod}
       />
       <FinancialCard
         title="Income"
@@ -79,6 +80,13 @@ const HomeScreen = () => {
           onChange={setSelectedPeriod}
         />
       </View>
+      
+      <View style={styles.chartContainer}>
+        <AreaChart
+          data={chartData}
+          color={theme.colors.success[500]}
+        />
+      </View>
     </ScrollView>
   );
 };
@@ -92,6 +100,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     // paddingHorizontal: theme.spacing.lg,
+  },
+  chartContainer: {
+    marginTop: theme.spacing.lg,
+    paddingHorizontal: theme.spacing.md,
   },
 });
 
