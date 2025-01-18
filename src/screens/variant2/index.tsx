@@ -6,6 +6,7 @@ import BankAccountCard2 from '../../components/bank-account-card2';
 import FinancialTabs2 from '../../components/financial-tabs2';
 import AnimatedDropdown from '../../components/animated-dropdown';
 import FinancialSummaryCard from '../../components/financial-summary-card';
+import AreaChartVariant2 from '../../components/area-chart-variant2';
 import {styles} from './styles';
 
 const periodOptions = [
@@ -77,6 +78,9 @@ const Variant2Screen = () => {
           onChange={setSelectedYear}
           width="48%"
         />
+      </View>
+      <View style={styles.chartContainer}>
+        <AreaChartVariant2 />
       </View>
       </View>
     </ScrollView>

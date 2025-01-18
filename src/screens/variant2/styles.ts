@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+
 import theme from '../../theme';
 
 export const styles = StyleSheet.create({
@@ -21,5 +22,9 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: theme.spacing.md,
+  },
+  chartContainer: {
+    paddingHorizontal: theme.spacing.md,
+    zIndex: 1,
   },
 }); 
