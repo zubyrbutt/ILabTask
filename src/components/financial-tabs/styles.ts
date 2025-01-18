@@ -1,26 +1,37 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
 import theme from '../../theme';
+
+const windowWidth = Dimensions.get('window').width;
+const indicatorWidth = windowWidth * 0.5; // 50% of screen width
 
 export const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    paddingHorizontal: theme.spacing.lg,
-    borderBottomWidth: 1,
-    borderBottomColor: theme.colors.gray[200],
+    alignItems: 'center',
+    paddingVertical: theme.spacing.lg,
+    width: '100%',
   },
-  tabWrapper: {
-    marginRight: theme.spacing['3xl'],
+  tabsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '100%',
+    position: 'relative',
   },
   tab: {
-    paddingVertical: theme.spacing.md,
+    paddingVertical: theme.spacing.sm,
+    alignItems: 'center',
+    width: indicatorWidth,
+  },
+  activeTab: {
+    // If needed for additional active tab styling
   },
   activeIndicator: {
     position: 'absolute',
-    bottom: -1,
-    left: 0,
-    right: 0,
-    height: 2,
+    bottom: 0,
+    width: indicatorWidth,
+    height: 3,
     backgroundColor: theme.colors.success[500],
-    borderRadius: 2,
+    borderRadius: 1.5,
+    left: 0,
   },
 }); 
