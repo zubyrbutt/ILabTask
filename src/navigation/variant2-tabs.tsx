@@ -1,62 +1,98 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Variant2Screen from '../screens/variant2';
-import {Variant2TabParamList} from './types';
 
-const Tab = createBottomTabNavigator<Variant2TabParamList>();
+import {View} from 'react-native';
+import {BottomTabs} from 'rn-animated-tabbar';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Feather from 'react-native-vector-icons/Feather';
+
+import Variant2Screen from '../screens/variant2';
+import theme from '../theme';
+
+const BottomTabsData = [
+  {
+    id: 'Overview',
+    title: 'Overview',
+    icon: () => (
+      <Feather name="home" size={24} color={theme.colors.gray[400]} />
+    ),
+    activeIcon: () => (
+      <Feather name="home" size={28} color={theme.colors.white} />
+    ),
+    component: Variant2Screen,
+  },
+  {
+    id: 'Transactions',
+    title: 'Transactions',
+    icon: () => (
+      <MaterialIcons
+        name="trending-up"
+        size={24}
+        color={theme.colors.gray[400]}
+      />
+    ),
+    activeIcon: () => (
+      <MaterialIcons name="trending-up" size={28} color={theme.colors.white} />
+    ),
+    component: Variant2Screen,
+  },
+  {
+    id: 'Cards',
+    title: 'Cards',
+    icon: () => (
+      <MaterialIcons
+        name="description"
+        size={24}
+        color={theme.colors.gray[400]}
+      />
+    ),
+    activeIcon: () => (
+      <MaterialIcons
+        name="description"
+        size={28}
+        color={theme.colors.white}
+      />
+    ),
+    component: Variant2Screen,
+  },
+  {
+    id: 'Settings',
+    title: 'Settings',
+    icon: () => (
+      <MaterialIcons
+        name="account-balance-wallet"
+        size={24}
+        color={theme.colors.gray[400]}
+      />
+    ),
+    activeIcon: () => (
+      <MaterialIcons
+        name="account-balance-wallet"
+        size={28}
+        color={theme.colors.white}
+      />
+    ),
+    component: Variant2Screen,
+  },
+];
 
 const Variant2Tabs = () => {
-  const insets = useSafeAreaInsets();
-
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {
-          height: 60 + insets.bottom,
-          backgroundColor: 'white',
-          borderTopWidth: 1,
-          borderTopColor: '#E5E7EB',
-        },
-        tabBarActiveTintColor: '#10B981',
-        tabBarInactiveTintColor: '#6B7280',
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '500',
-          paddingBottom: 5,
-        },
-      }}>
-      <Tab.Screen 
-        name="Overview" 
-        component={Variant2Screen}
-        options={{
-          tabBarLabel: 'Overview',
-        }}
-      />
-      <Tab.Screen 
-        name="Transactions" 
-        component={Variant2Screen}
-        options={{
-          tabBarLabel: 'Transactions',
-        }}
-      />
-      <Tab.Screen 
-        name="Cards" 
-        component={Variant2Screen}
-        options={{
-          tabBarLabel: 'Cards',
-        }}
-      />
-      <Tab.Screen 
-        name="Settings" 
-        component={Variant2Screen}
-        options={{
-          tabBarLabel: 'Settings',
-        }}
-      />
-    </Tab.Navigator>
+    <View style={{flex: 1}}>
+      <Variant2Screen />
+        <BottomTabs
+          tabsData={BottomTabsData}
+          tabBarBackground={theme.colors.white}
+          activeTabBackground={"#efefef"}
+          navigationHandler={id => console.log(`Navigating to tab ${id}`)}
+          textColor={theme.colors.black}
+          activeCircleColor={theme.colors.success[700]}
+          inactiveTabColor="#888888" // Gray color for inactive tabs
+          tabBorderRadius={20} // Rounded corners for the tab bar
+          activeTabScale={1.2} // Slightly larger active tab
+        />
+      
+    </View>
   );
 };
 
-export default Variant2Tabs; 
+export default Variant2Tabs;
