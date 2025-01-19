@@ -73,8 +73,8 @@ const Variant2Screen = () => {
           width="48%"
         />
         <AnimatedDropdown
-          options={yearOptions}
-          value={selectedYear}
+          options={periodOptions}
+          value={selectedPeriod}
           onChange={setSelectedYear}
           width="48%"
         />

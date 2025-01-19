@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: theme.spacing.md,
-    marginBottom: theme.spacing.xl,
+    marginVertical: theme.spacing.xl,
     zIndex: 2,
   },
   cardsContainer: {

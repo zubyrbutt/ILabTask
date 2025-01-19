@@ -33,9 +33,28 @@ export const LineChart = ({
   gradientEndOpacity = 0.005,
 }: LineChartProps) => {
   const progress = useSharedValue(0);
-  const [currentX, setCurrentX] = useState<number | null>(null);
-  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
+  const middleIndex = Math.floor(points.length / 2); // Middle index of the points array
+  const [currentX, setCurrentX] = useState<number | null>(points.length > 0 ? points[middleIndex].x : null);
+  const [currentIndex, setCurrentIndex] = useState<number | null>(points.length > 0 ? middleIndex : null);
   const chartRef = useRef<View>(null);
+
+  const PADDING = {
+    x: 2, // reduced horizontal padding to 2%
+    y: 5, // reduced vertical padding to 5%
+  };
+  
+  const VIEW_BOX = {
+    minX: -PADDING.x,
+    minY: -PADDING.y,
+    width: 150 + (2 * PADDING.x), // increased width to 150
+    height: 120 + (2 * PADDING.y), // increased height to 120
+  };
+
+  const transformedPoints = points.map(point => ({
+    ...point,
+    x: point.x * (150 - 2 * PADDING.x) / 150 + PADDING.x, // adjusted for new width
+    y: point.y * (120 - 2 * PADDING.y) / 120 + PADDING.y, // adjusted for new height
+  }));
 
   React.useEffect(() => {
     progress.value = withTiming(1, {
@@ -50,40 +69,46 @@ export const LineChart = ({
       chartRef.current?.measure((x, y, width, height, pageX, pageY) => {
         const touchX = event.nativeEvent.pageX - pageX;
         const chartWidth = width;
-        const normalizedX = (touchX / chartWidth) * 100;
+        const normalizedX = ((touchX / chartWidth) * (150 - 2 * PADDING.x)) + PADDING.x;
         
-        if (normalizedX >= 0 && normalizedX <= 100) {
+        if (normalizedX >= PADDING.x && normalizedX <= (150 - PADDING.x) && transformedPoints.length > 0) {
+          const maxX = transformedPoints[transformedPoints.length - 1].x;
+          const clampedX = Math.min(Math.max(normalizedX, PADDING.x), maxX);
           const index = Math.min(
-            Math.max(0, Math.round((normalizedX / 100) * (points.length - 1))),
-            points.length - 1
+            Math.max(0, Math.round(((clampedX - PADDING.x) / (maxX - PADDING.x)) * (transformedPoints.length - 1))),
+            transformedPoints.length - 1
           );
-          setCurrentX(points[index].x);
-          setCurrentIndex(index);
+          
+          if (transformedPoints[index]) {
+            setCurrentX(transformedPoints[index].x);
+            setCurrentIndex(index);
+          }
         }
       });
     },
     onPanResponderRelease: () => {
-      setCurrentX(null);
-      setCurrentIndex(null);
+      // Don't reset on release to keep circles visible
+      // setCurrentX(null);
+      // setCurrentIndex(null);
     },
   });
 
   const lineProps = useAnimatedProps(() => {
-    const currentX = 100 * progress.value;
-    const visiblePoints = points.filter(point => point.x <= currentX);
+    const currentX = (150 - 2 * PADDING.x) * progress.value + PADDING.x;
+    const visiblePoints = transformedPoints.filter(point => point.x <= currentX);
 
     if (visiblePoints.length < 2) return { d: '' };
 
     return {
       d: visiblePoints.reduce((acc, point, index, arr) => {
         const x = point.x;
-        const y = 100 - point.y;
+        const y = 120 - point.y; // adjusted for new height
 
         if (index === 0) return `M ${x} ${y}`;
 
         const prevPoint = arr[index - 1];
         const cp1x = prevPoint.x + (x - prevPoint.x) / 3;
-        const cp1y = 100 - prevPoint.y;
+        const cp1y = 120 - prevPoint.y; // adjusted for new height
         const cp2x = x - (x - prevPoint.x) / 3;
         const cp2y = y;
 
@@ -93,20 +118,20 @@ export const LineChart = ({
   });
 
   const areaProps = useAnimatedProps(() => {
-    const currentX = 100 * progress.value;
+    const currentX = 150 * progress.value;
     const visiblePoints = points.filter(point => point.x <= currentX);
 
     if (visiblePoints.length < 2) return { d: '' };
 
     const line = visiblePoints.reduce((acc, point, index, arr) => {
       const x = point.x;
-      const y = 100 - point.y;
+      const y = 120 - point.y; // adjusted for new height
 
       if (index === 0) return `M ${x} ${y}`;
 
       const prevPoint = arr[index - 1];
       const cp1x = prevPoint.x + (x - prevPoint.x) / 3;
-      const cp1y = 100 - prevPoint.y;
+      const cp1y = 120 - prevPoint.y; // adjusted for new height
       const cp2x = x - (x - prevPoint.x) / 3;
       const cp2y = y;
 
@@ -115,7 +140,7 @@ export const LineChart = ({
 
     const lastPoint = visiblePoints[visiblePoints.length - 1];
     return {
-      d: `${line} L ${lastPoint.x} 100 L 0 100 Z`,
+      d: `${line} L ${lastPoint.x} 120 L 0 120 Z`, // adjusted for new height
     };
   });
 
@@ -125,7 +150,7 @@ export const LineChart = ({
       style={{flex: 1}} 
       {...panResponder.panHandlers}
     >
-      <Svg width="100%" height="100%" viewBox="0 0 100 100">
+      <Svg width="100%" height="100%" viewBox={`${VIEW_BOX.minX} ${VIEW_BOX.minY} ${VIEW_BOX.width} ${VIEW_BOX.height}`}>
         <Defs>
           <LinearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
             <Stop offset="0" stopColor={color} stopOpacity={gradientStartOpacity} />
@@ -144,26 +169,16 @@ export const LineChart = ({
         <AnimatedPath
           animatedProps={lineProps}
           stroke={color}
-          strokeWidth="2"
+          strokeWidth="3"
           fill="none"
         />
 
         {currentX !== null && currentIndex !== null && (
           <>
-            <Line
-              x1={currentX}
-              y1="0"
-              x2={currentX}
-              y2="100"
-              stroke={theme.colors.gray[300]}
-              strokeWidth="1"
-              strokeDasharray="2 2"
-            />
-            
             <Circle
               cx={currentX}
-              cy={100 - points[currentIndex].y}
-              r="4"
+              cy={120 - transformedPoints[currentIndex].y}
+              r="6" // Increased radius for better visibility
               fill={theme.colors.white}
               stroke={color}
               strokeWidth="2"
@@ -171,8 +186,8 @@ export const LineChart = ({
 
             <Circle
               cx={currentX}
-              cy={100 - points[currentIndex].y}
-              r="2"
+              cy={120 - transformedPoints[currentIndex].y}
+              r="4" // Increased radius for better visibility
               fill={color}
             />
           </>
@@ -180,4 +195,4 @@ export const LineChart = ({
       </Svg>
     </View>
   );
-}; 
+};

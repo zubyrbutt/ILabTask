@@ -28,7 +28,9 @@ export const styles = StyleSheet.create({
     marginTop: theme.spacing.md,
   },
   chartContainer: {
-    width: '60%',
+    width: '50%',
     height: 120,
+    
+    // backgroundColor: 'red',
   },
 }); 
