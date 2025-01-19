@@ -1,7 +1,6 @@
 import React from 'react';
 
-import {View, TouchableOpacity, Image} from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {Image, SafeAreaView, TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Label from '../label';
@@ -26,7 +25,7 @@ const HeaderVariation2 = ({
   onProfilePress,
 }: HeaderVariation2Props) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.leftSection}>
         <TouchableOpacity onPress={onMenuPress} style={styles.menuButton}>
           <MaterialCommunityIcons name="menu" size={24} color={theme.colors.success[500]} />
@@ -67,7 +66,7 @@ const HeaderVariation2 = ({
           />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Image, TouchableOpacity, View } from 'react-native';
+import { Image, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
 import theme from '../../theme';
@@ -14,7 +14,7 @@ interface HeaderProps {
 
 const HeaderVariation1 = ({onMenuPress, onNotificationPress}: HeaderProps) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.leftSection}>
         <TouchableOpacity onPress={onMenuPress} style={styles.iconButton}>
           <Icon name="menu" size={24} color={theme.colors.gray[700]} />
@@ -36,7 +36,7 @@ const HeaderVariation1 = ({onMenuPress, onNotificationPress}: HeaderProps) => {
           <Image source={{uri: 'https://i.pravatar.cc/300'}} style={styles.avatarImage} />
         </View>
       </View>
-    </View>
+      </SafeAreaView>
   );
 };
 
