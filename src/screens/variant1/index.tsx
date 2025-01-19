@@ -46,24 +46,24 @@ const Variant1 = () => {
       />
       <FinancialCard
         title="Expenses"
-        amount={1280}
-        percentage={15}
+        amount={147.57}
+        percentage={10}
         chartPoints={expensesData}
         period="Last Qtr"
         color={theme.colors.error[500]}
       />
       <FinancialCard
         title="Taxes"
-        amount={1280}
-        percentage={15}
+        amount={91}
+        percentage={20}
         chartPoints={taxesData}
         period="Last Qtr"
-        color={theme.colors.error[500]}
+        color={theme.colors.success[500]}
       />
       <FinancialCard
         title="Invoices"
-        amount={1280}
-        percentage={15}
+        amount={30}
+        percentage={20}
         chartPoints={invoicesData}
         period="Last Qtr"
         color={theme.colors.success[500]}

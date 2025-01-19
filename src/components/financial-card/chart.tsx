@@ -173,25 +173,36 @@ export const LineChart = ({
           fill="none"
         />
 
-        {currentX !== null && currentIndex !== null && (
-          <>
-            <Circle
-              cx={currentX}
-              cy={120 - transformedPoints[currentIndex].y}
-              r="6" // Increased radius for better visibility
-              fill={theme.colors.white}
-              stroke={color}
-              strokeWidth="2"
-            />
+{currentX !== null && currentIndex !== null && (
+  <>
+    {/* Outer glow effect */}
+    <Circle
+      cx={currentX}
+      cy={120 - transformedPoints[currentIndex].y}
+      r="12"
+      fill={color}
+      opacity="0.2"
+    />
+    
+    {/* Larger white circle */}
+    <Circle
+      cx={currentX}
+      cy={120 - transformedPoints[currentIndex].y}
+      r="8"
+      fill={theme.colors.white}
+      stroke={color}
+      strokeWidth="2"
+    />
 
-            <Circle
-              cx={currentX}
-              cy={120 - transformedPoints[currentIndex].y}
-              r="4" // Increased radius for better visibility
-              fill={color}
-            />
-          </>
-        )}
+    {/* Smaller colored circle */}
+    <Circle
+      cx={currentX}
+      cy={120 - transformedPoints[currentIndex].y}
+      r="5"
+      fill={color}
+    />
+  </>
+)}
       </Svg>
     </View>
   );
